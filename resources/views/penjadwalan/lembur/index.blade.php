@@ -1,113 +1,116 @@
 @extends('layouts.app')
 @section('content')
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Welcome <span id="session">{{ strtoupper(session('name')) }}</span>
-                    </h2>
-                    <h5 class="text-white op-7 mb-2">Data Lembur Anda</h5>
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Welcome <span id="session">{{ strtoupper(session('name')) }}</span>
+                </h2>
+                <h5 class="text-white op-7 mb-2">Data Lembur Anda</h5>
+            </div>
+            <div class="ml-md-auto py-2 py-md-0">
+                <button onclick="add()" class="btn btn-primary btn-round">Tambah Data Lembur <i
+                        class="fas fa-plus-circle"></i></button>
+                {{-- <a href="http://auth.solonet.net.id/user/profile" class="btn btn-secondary btn-round">Setting <i
+                        class="fas fa-user-cog"></i></a> --}}
+                <a href="{{ route('logout') }}" class="btn btn-secondary btn-round">Logout <i
+                        class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <h2 class="header-title">Data Total Lembur Pegawai</h2>
                 </div>
-                <div class="ml-md-auto py-2 py-md-0">
-                    <button onclick="add()" class="btn btn-primary btn-round">Tambah Data Lembur <i
-                            class="fas fa-plus-circle"></i></button>
-                    {{-- <a href="http://auth.solonet.net.id/user/profile" class="btn btn-secondary btn-round">Setting <i class="fas fa-user-cog"></i></a> --}}
-                    <a href="{{ route('logout') }}" class="btn btn-secondary btn-round">Logout <i
-                            class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-2 col-12 mb-3">
+                    <label>Tanggal Awal</label>
+                    <input type="date" class="form-control"
+                        value="{{ date('Y-m-26', strtotime('-1 month', strtotime(date('Y-m-01')))) }}" id="awal">
+                </div>
+                <div class="col-md-2 col-12 mb-3">
+                    <label>Tanggal Akhir</label>
+                    <input type="date" class="form-control" value="{{ date('Y-m-25') }}" id="akhir">
+                </div>
+                <div class="col-md-1 col-12 text-center mb-3">
+                    <button onclick="add_filter()" class="btn btn-secondary mt-3"><i class="fa fa-search"
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table id="tableUpah" class="display table table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Teknisi</th>
+                            <th>Nama Teknisi</th>
+                            <th>Total Durasi Lembur</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-secondary mt-3">Pilih</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <h2 class="header-title">Data Lembur Pegawai</h2>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="dataTable" class="display table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px;">No</th>
+                                    <th>Tanggal</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Nama Teknisi</th>
+                                    <th>Type</th>
+                                    <th>Keterangan</th>
+                                    <th>Durasi</th>
+                                    <th>
+                                        <center>Aksi</center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="page-inner mt--5">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 col-12">
-                        <h2 class="header-title">Data Total Lembur Pegawai</h2>
-                    </div>
-                </div>
-                <div class="row justify-content-end">
-                    <div class="col-md-2 col-12 mb-3">
-                        <label>Tanggal Awal</label>
-                        <input type="date" class="form-control"
-                            value="{{ date('Y-m-26', strtotime('-1 month', strtotime(date('Y-m-01')))) }}" id="awal">
-                    </div>
-                    <div class="col-md-2 col-12 mb-3">
-                        <label>Tanggal Akhir</label>
-                        <input type="date" class="form-control" value="{{ date('Y-m-25') }}" id="akhir">
-                    </div>
-                    <div class="col-md-1 col-12 text-center mb-3">
-                        <button onclick="add_filter()" class="btn btn-secondary mt-3"><i class="fa fa-search"
-                                aria-hidden="true"></i></button>
-                    </div>
-                </div>
-                <br>
-                <div class="table-responsive">
-                    <table id="tableUpah" class="display table table-hover" width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>ID Teknisi</th>
-                                <th>Nama Teknisi</th>
-                                <th>Total Durasi Lembur</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btn-secondary mt-3">Pilih</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 col-12">
-                                <h2 class="header-title">Data Lembur Pegawai</h2>
-                                <br>
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table id="dataTable" class="display table table-hover" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px;">No</th>
-                                        <th>Tanggal</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Nama Teknisi</th>
-                                        <th>Type</th>
-                                        <th>Keterangan</th>
-                                        <th>Durasi</th>
-                                        <th><center>Aksi</center></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- data table end -->
-    </div>
-    <!-- main content area end -->
+    <!-- data table end -->
+</div>
+<!-- main content area end -->
 @endsection
 @include('penjadwalan.lembur.modal')
 @section('js')
-    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
 
-    <script type="text/javascript">
-        var table;
+<script type="text/javascript">
+    var table;
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
@@ -120,17 +123,23 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('penjadwalan.lembur.index') }}",
+                    url: "{{ route('penjadwalan.lembur.create') }}",
                     type: "GET",
                 },
                 columns: [{
                         data: 'DT_RowIndex'
                     },
                     {
-                        data: 'user.id'
+                        data: 'id_user'
                     },
                     {
-                        data: 'user.name'
+                        data: 'name'
+                    },
+                    {
+                        data: 'total_durasi_lembur'
+                    },
+                    {
+                        data: 'action'
                     },
                 ],
             });
@@ -310,5 +319,5 @@
             }
             return 'Rp. ' + rev2.split('').reverse().join('');
         }
-    </script>
+</script>
 @endsection

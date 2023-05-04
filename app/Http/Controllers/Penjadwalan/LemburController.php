@@ -40,7 +40,7 @@ class LemburController extends Controller
                     return $data->durasi . ' Jam';
                 })
                 ->addColumn('action', function ($row) {
-                        $actionBtn = '
+                    $actionBtn = '
                         <center>
                         <a href="javascript:void(0)" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit(' . $row->id . ')"><i class="fas fa-edit"></i></a>
                         <a href="javascript:void(0)" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus" onclick="delete_data(' . $row->id . ')"><i class="fas fa-trash-alt"></i></a>
@@ -67,7 +67,29 @@ class LemburController extends Controller
      */
     public function create()
     {
-        //
+        if (request()->ajax()) {
+
+            $lembur = User::with(['total_durasi_lembur'])->get();
+
+            return Datatables::of($lembur)
+                ->addIndexColumn()
+                ->addColumn('total_durasi_lembur', function ($data) {
+                    if ($data->total_durasi_lembur) {
+                        return $data->total_durasi_lembur->total.' Jam';
+                    }else{
+                        return '0 Jam';
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '
+                        <center>
+                        <a href="javascript:void(0)" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Tambah"><i class="fas fa-plus"></i></a>
+                        </center>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**
@@ -100,7 +122,7 @@ class LemburController extends Controller
         // $diff = $end->diff($start);
         $durasi = $diff->h;
         // return $request;
-        
+
         $gajiPokok = Gaji::find($request->gajipokok);
         // $durasi = $request->durasi;
 

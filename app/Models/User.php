@@ -51,4 +51,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function total_durasi_lembur()
+    {
+        return $this->hasOne(Lembur::class, 'id_user')
+                    ->selectRaw('
+                        SUM(TIMESTAMPDIFF(HOUR, start, end)) as total, id_user
+                    ')
+                    ->groupBy('id_user');
+    }
 }
