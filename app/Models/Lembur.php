@@ -11,6 +11,8 @@ class Lembur extends Model
 
     protected $table = 'lembur';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'start',
         'end',
