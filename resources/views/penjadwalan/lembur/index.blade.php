@@ -58,7 +58,7 @@
 
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-secondary mt-3">Pilih</button>
+                <input type="text" value="" class="form-control">
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
                                     <th>Type</th>
                                     <th>Keterangan</th>
                                     <th>Durasi</th>
-                                    <th>
+                                    <th style="width: 130px;">
                                         <center>Aksi</center>
                                     </th>
                                 </tr>
@@ -187,7 +187,7 @@
             table.ajax.reload(null,false);
             // count_total();
         }
-        
+
         function add() {
             $('#form')[0].reset(); // reset form on modals
             $('[name="id"]').val('');
@@ -232,7 +232,7 @@
                         }
                     }
                 },
-                error: function (jqXHR, textStatus , errorThrown){ 
+                error: function (jqXHR, textStatus , errorThrown){
                     alert(errorThrown);
                 }
             });
@@ -264,7 +264,7 @@
                         sukseshapus();
                         // count_total();
                     },
-                    error: function (jqXHR, textStatus , errorThrown){ 
+                    error: function (jqXHR, textStatus , errorThrown){
                         console.log(errorThrown);
                     }
                 })
@@ -279,7 +279,7 @@
         }
 
         function edit(id){
-            $('#form')[0].reset(); 
+            $('#form')[0].reset();
             $('#mulai').html("");
             $('#selesai').html("");
             $('#user').html("");
@@ -300,7 +300,7 @@
                 $('[name="type"]').val(data.type);
                 $('[name="keterangan"]').val(data.keterangan);
                 $('#modal-form').modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Data'); // Set title to Bootstrap modal title   
+                $('.modal-title').text('Edit Data'); // Set title to Bootstrap modal title
             },
             error: function (jqXHR, textStatus , errorThrown) {
                 alert(errorThrown);

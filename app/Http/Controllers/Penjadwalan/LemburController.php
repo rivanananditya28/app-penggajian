@@ -113,7 +113,7 @@ class LemburController extends Controller
         }
 
         // * Hitung Upah Lembur *
-        // berdasarkan KEPUTUSAN MENTERI TENAGA KERJA DAN TRANSMIGRASI 
+        // berdasarkan KEPUTUSAN MENTERI TENAGA KERJA DAN TRANSMIGRASI
         // REPUBLIK INDONESIA NOMOR KEP.102 /MEN/VI/2004
 
         $start  =  new DateTime($request->mulai);
